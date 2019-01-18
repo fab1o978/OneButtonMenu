@@ -44,6 +44,7 @@ bool OneButtonMenu::readState()
         {
             timer.restart();
             isPressed = true;
+            buttonState = PRESS;
 
             delay(100); // debounce
         }
@@ -51,7 +52,10 @@ bool OneButtonMenu::readState()
         // If is pressed and time has passed
         if(isPressed && timer.hasPassed(pressTime)){
             Serial.println(timer.elapsed());
+            buttonState = LONG_PRESS;
         }
+    } else {
+        buttonState = NONE;
     }
 
     return state;
@@ -60,12 +64,12 @@ bool OneButtonMenu::readState()
 state OneButtonMenu::releaseButton()
 {
     // act as debounce. presses shorter than 50ms will be ignored
-    if(!timer.hasPassed(50))
-        return NONE;
+    /*if(!timer.hasPassed(50))
+        return NONE;*/
 
     isPressed = false;
 
-    if (timer.hasPassed(pressTime))
+    if (buttonState == LONG_PRESS)
     {
         // Elapsed time, debug purpose
         Serial.println(timer.elapsed());

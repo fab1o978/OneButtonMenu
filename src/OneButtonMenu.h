@@ -28,6 +28,7 @@ class OneButtonMenu
     state releaseButton();
     int pressTime = 500;
     int defaultButtonState = HIGH;
+    state buttonState = NONE;
 
     // Variables
     Chrono timer;
