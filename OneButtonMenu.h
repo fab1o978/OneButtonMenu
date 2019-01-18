@@ -13,13 +13,17 @@ typedef enum
 class OneButtonMenu
 {
   public:
-    OneButtonMenu();
+    // Constructors
     OneButtonMenu(int buttonPin, String _items[]);
+
+    // Methods
     void init();
     void next();
     String current();
     bool readState();
     bool isPressed = false;
+
+    // Variables
     state releaseButton();
     Chrono timer;
 

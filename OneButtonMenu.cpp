@@ -3,10 +3,6 @@
 
 #define NUMITEMS(arg) (sizeof(arg) / sizeof(arg[0]))
 
-OneButtonMenu::OneButtonMenu()
-{
-}
-
 OneButtonMenu::OneButtonMenu(int _pin, String _items[])
 {
     int count = NUMITEMS(items);
@@ -45,6 +41,8 @@ bool OneButtonMenu::readState(){
     if(!isPressed && state){
         timer.restart();
         isPressed = true;
+
+        delay(50); // debounce
     }
 
     return state;
@@ -55,7 +53,6 @@ state OneButtonMenu::releaseButton(){
     isPressed = false;
 
     if(timer.hasPassed(500)){
-        Serial.println("LONG PRESS");
         return LONG_PRESS;
     }
 
