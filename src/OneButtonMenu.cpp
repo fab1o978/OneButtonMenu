@@ -31,25 +31,42 @@ String OneButtonMenu::current()
     return items[index];
 }
 
-bool OneButtonMenu::readState(){
+bool OneButtonMenu::readState()
+{
 
     bool state = digitalRead(buttonPin) != defaultButtonState ? true : false;
 
-    if(!isPressed && state){
-        timer.restart();
-        isPressed = true;
+    // If button is pressed
+    if (state)
+    {
+        // If it wasn't pressed before
+        if (!isPressed)
+        {
+            timer.restart();
+            isPressed = true;
 
-        delay(100); // debounce
+            delay(100); // debounce
+        }
+
+        // If is pressed and time has passed
+        if(isPressed && timer.hasPassed(pressTime)){
+            Serial.println(timer.elapsed());
+        }
     }
 
     return state;
 }
 
-state OneButtonMenu::releaseButton(){
+state OneButtonMenu::releaseButton()
+{
+    // act as debounce. presses shorter than 100ms will be ignored
+    if(!timer.hasPassed(100))
+        return NONE;
 
     isPressed = false;
 
-    if(timer.hasPassed(pressTime)){
+    if (timer.hasPassed(pressTime))
+    {
         // Elapsed time, debug purpose
         Serial.println(timer.elapsed());
         return LONG_PRESS;

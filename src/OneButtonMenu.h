@@ -8,6 +8,7 @@
 
 typedef enum
 {
+  NONE,
   PRESS,
   LONG_PRESS
 } state;
