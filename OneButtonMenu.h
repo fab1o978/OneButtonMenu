@@ -14,7 +14,7 @@ class OneButtonMenu
 {
   public:
     // Constructors
-    OneButtonMenu(int buttonPin, String _items[]);
+    OneButtonMenu(int buttonPin, String items[]);
 
     // Methods
     void init();
@@ -22,15 +22,18 @@ class OneButtonMenu
     String current();
     bool readState();
     bool isPressed = false;
+    state releaseButton();
+    int pressTime = 500;
 
     // Variables
-    state releaseButton();
     Chrono timer;
 
   private:
+    // Variables
     int index;
     int buttonPin;
     String *items;
+    int itemsCount;
 };
 
 #endif

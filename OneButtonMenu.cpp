@@ -5,7 +5,7 @@
 
 OneButtonMenu::OneButtonMenu(int _pin, String _items[])
 {
-    int count = NUMITEMS(items);
+    itemsCount = NUMITEMS(_items);
 
     items = _items;
     buttonPin = _pin;
@@ -14,10 +14,8 @@ OneButtonMenu::OneButtonMenu(int _pin, String _items[])
 void OneButtonMenu::init()
 {
     Serial.print("Created menus with ");
-    Serial.print(sizeof(items));
+    Serial.print(itemsCount);
     Serial.print(" items");
-
-    Serial.println(items[1]);
 
     // attachInterrupt(digitalPinToInterrupt(buttonPin), releaseButton, RISING);
 }
@@ -26,7 +24,7 @@ void OneButtonMenu::next()
 {
     index++;
 
-    if (index > 3)
+    if (index > itemsCount)
         index = 0;
 }
 
@@ -42,7 +40,7 @@ bool OneButtonMenu::readState(){
         timer.restart();
         isPressed = true;
 
-        delay(50); // debounce
+        delay(100); // debounce
     }
 
     return state;
@@ -52,7 +50,7 @@ state OneButtonMenu::releaseButton(){
 
     isPressed = false;
 
-    if(timer.hasPassed(500)){
+    if(timer.hasPassed(pressTime)){
         return LONG_PRESS;
     }
 
