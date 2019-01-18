@@ -1,11 +1,9 @@
 #include <OneButtonMenu.h>
 #include <Arduino.h>
 
-#define NUMITEMS(arg) (sizeof(arg) / sizeof(arg[0]))
-
-OneButtonMenu::OneButtonMenu(int _pin, String _items[])
+OneButtonMenu::OneButtonMenu(int _pin, String _items[], int _itemsCount)
 {
-    itemsCount = NUMITEMS(_items);
+    itemsCount = _itemsCount;
 
     items = _items;
     buttonPin = _pin;
@@ -24,7 +22,7 @@ void OneButtonMenu::next()
 {
     index++;
 
-    if (index > itemsCount)
+    if (index >= itemsCount)
         index = 0;
 }
 

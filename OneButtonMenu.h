@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <Chrono.h>
 
+#define NUMITEMS(arg) (sizeof(arg) / sizeof(arg[0]))
+
 typedef enum
 {
   PRESS,
@@ -14,7 +16,7 @@ class OneButtonMenu
 {
   public:
     // Constructors
-    OneButtonMenu(int buttonPin, String items[]);
+    OneButtonMenu(int buttonPin, String items[], int itemsCount);
 
     // Methods
     void init();
