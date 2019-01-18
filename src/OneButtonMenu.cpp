@@ -13,7 +13,7 @@ void OneButtonMenu::init()
 {
     Serial.print("Created menus with ");
     Serial.print(itemsCount);
-    Serial.print(" items");
+    Serial.println(" items\n");
 
     // attachInterrupt(digitalPinToInterrupt(buttonPin), releaseButton, RISING);
 }
@@ -59,8 +59,8 @@ bool OneButtonMenu::readState()
 
 state OneButtonMenu::releaseButton()
 {
-    // act as debounce. presses shorter than 100ms will be ignored
-    if(!timer.hasPassed(100))
+    // act as debounce. presses shorter than 50ms will be ignored
+    if(!timer.hasPassed(50))
         return NONE;
 
     isPressed = false;
