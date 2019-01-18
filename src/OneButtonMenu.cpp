@@ -1,12 +1,12 @@
 #include <OneButtonMenu.h>
 #include <Arduino.h>
 
+// Button Pin, Menu Items array, Items count
 OneButtonMenu::OneButtonMenu(int _pin, String _items[], int _itemsCount)
 {
-    itemsCount = _itemsCount;
-
-    items = _items;
     buttonPin = _pin;
+    items = _items;
+    itemsCount = _itemsCount;
 }
 
 void OneButtonMenu::init()
@@ -32,7 +32,8 @@ String OneButtonMenu::current()
 }
 
 bool OneButtonMenu::readState(){
-    bool state = digitalRead(buttonPin) == LOW ? true : false;
+
+    bool state = digitalRead(buttonPin) != defaultButtonState ? true : false;
 
     if(!isPressed && state){
         timer.restart();
@@ -49,6 +50,8 @@ state OneButtonMenu::releaseButton(){
     isPressed = false;
 
     if(timer.hasPassed(pressTime)){
+        // Elapsed time, debug purpose
+        Serial.println(timer.elapsed());
         return LONG_PRESS;
     }
 
